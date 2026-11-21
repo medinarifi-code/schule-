@@ -1,0 +1,157 @@
+:root {
+  --bg: #fff8ef;
+  --card: #ffffff;
+  --text: #2b2118;
+  --muted: #8a7a6b;
+  --accent: #f28c28;
+  --accent-dark: #d9711a;
+  --accent-soft: #ffe2c4;
+  --danger: #d63b3b;
+  --border: #efe2d3;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--accent), #f6b443);
+  color: #fff;
+  text-align: center;
+  padding: 32px 16px 40px;
+  position: relative;
+}
+.hero.admin { background: linear-gradient(135deg, #4a5568, #2d3748); padding-bottom: 32px; }
+.hero h1 { margin: 0 0 8px; font-size: 2rem; }
+.hero p { margin: 0 auto; max-width: 480px; opacity: 0.95; }
+.hero #logout { position: absolute; top: 12px; right: 12px; color: #fff; border-color: #fff8; }
+
+.container {
+  max-width: 640px;
+  margin: -20px auto 0;
+  padding: 0 16px 32px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(80, 50, 20, 0.08);
+}
+.card h2 { margin: 0 0 8px; font-size: 1.25rem; }
+
+.muted { color: var(--muted); font-weight: normal; }
+footer { text-align: center; padding: 0 16px 24px; font-size: 0.85rem; }
+
+/* Produkte / Ergebnisse */
+.product-list { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+.product {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+  font-size: 1.05rem;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.product:not(:disabled):not(.static):hover { border-color: var(--accent); }
+.product:not(:disabled):not(.static):active { transform: scale(0.98); }
+.product:disabled { cursor: default; }
+.product.mine { border-color: var(--accent); }
+.product .bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--accent-soft);
+  transition: width 0.4s ease;
+  z-index: 0;
+}
+.product-name, .product-count { position: relative; z-index: 1; }
+.product-name { font-weight: 600; }
+.product-count { color: var(--muted); white-space: nowrap; }
+
+/* Formulare */
+textarea, input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font: inherit;
+  resize: vertical;
+}
+textarea:focus, input:focus { outline: none; border-color: var(--accent); }
+#login-form { display: flex; flex-direction: column; gap: 10px; }
+
+.row { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; }
+.row input { flex: 1; }
+#product-form { margin-top: 0; }
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--accent-dark); }
+.btn:disabled { opacity: 0.6; cursor: wait; }
+.btn.small { padding: 4px 10px; font-size: 0.85rem; }
+.btn.danger { background: var(--danger); }
+.btn.ghost { background: transparent; border-color: currentColor; color: var(--danger); }
+.btn.ghost:hover { background: #fdecec; }
+.hero .btn.ghost:hover { background: #fff2; }
+#reset-votes, #clear-wishes { width: 100%; margin-top: 8px; }
+
+.msg { margin: 10px 0 0; padding: 10px; border-radius: 8px; background: #e8f7ec; color: #1f6b35; }
+.msg.error { background: #fdecec; color: var(--danger); }
+
+/* Admin-Listen */
+.admin-list { list-style: none; padding: 0; margin: 12px 0; }
+.admin-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  word-break: break-word;
+}
+.admin-list li:last-child { border-bottom: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1712;
+    --card: #2a231c;
+    --text: #f3ebe2;
+    --muted: #b3a493;
+    --border: #3d3228;
+    --accent-soft: #5a3a1a;
+  }
+  .product, textarea, input[type="text"], input[type="email"], input[type="password"] {
+    background: #231d17;
+    color: var(--text);
+  }
+  .msg { background: #1f3a27; color: #a6e3b7; }
+  .msg.error { background: #3d1f1f; color: #f3a3a3; }
+}

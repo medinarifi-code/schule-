@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // >>> HIER DIESELBE ADMIN-E-MAIL WIE IN js/firebase-config.js EINTRAGEN <<<
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'admin@example.com';
+    }
+
+    function currentRound() {
+      return get(/databases/$(database)/documents/config/main).data.round;
+    }
+
+    // Aktuelle Abstimmungsrunde
+    match /config/main {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.data.keys().hasOnly(['round'])
+        && request.resource.data.round is int;
+    }
+
+    // Produkte: alle lesen, nur Admin schreibt
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update: if isAdmin()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 60;
+      allow delete: if isAdmin();
+    }
+
+    // Stimmen: Dokument-ID = Geräte-ID → genau 1 Stimme pro Gerät und Runde
+    match /rounds/{round}/votes/{uid} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && !exists(/databases/$(database)/documents/rounds/$(round)/votes/$(uid))
+        && string(currentRound()) == round
+        && request.resource.data.keys().hasOnly(['productId', 'createdAt'])
+        && request.resource.data.productId is string
+        && exists(/databases/$(database)/documents/products/$(request.resource.data.productId))
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // Wünsche: jeder darf schreiben, nur Admin lesen/löschen
+    match /wishes/{wishId} {
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['text', 'createdAt'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 200
+        && request.resource.data.createdAt == request.time;
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+  }
+}

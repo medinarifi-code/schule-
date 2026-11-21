@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Schülerverkauf – Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="hero admin">
+    <h1>🔧 Admin – Schülerverkauf</h1>
+    <button id="logout" class="btn small ghost" hidden>Abmelden</button>
+  </header>
+
+  <main class="container">
+    <!-- Login -->
+    <section id="login-section" class="card" hidden>
+      <h2>Anmelden</h2>
+      <form id="login-form">
+        <input id="login-email" type="email" placeholder="E-Mail" autocomplete="username" required />
+        <input id="login-password" type="password" placeholder="Passwort" autocomplete="current-password" required />
+        <button type="submit" class="btn">Anmelden</button>
+      </form>
+      <p id="login-msg" class="msg error" hidden></p>
+    </section>
+
+    <div id="admin-section" hidden>
+      <!-- Produkte -->
+      <section class="card">
+        <h2>Produkte zur Abstimmung</h2>
+        <form id="product-form" class="row">
+          <input id="product-name" type="text" maxlength="60" placeholder="z. B. Pizza-Brötchen 🍕" required />
+          <button type="submit" class="btn">Hinzufügen</button>
+        </form>
+        <ul id="admin-products" class="admin-list"></ul>
+      </section>
+
+      <!-- Ergebnisse -->
+      <section class="card">
+        <h2>Stimmen <span id="round-label" class="muted"></span></h2>
+        <p id="total-votes" class="muted"></p>
+        <div id="results" class="product-list"></div>
+        <button id="reset-votes" class="btn danger">🔄 Alle Stimmen auf 0 setzen</button>
+      </section>
+
+      <!-- Wünsche -->
+      <section class="card">
+        <h2>💡 Wünsche der Schüler <span id="wish-total" class="muted"></span></h2>
+        <ul id="wishes" class="admin-list"></ul>
+        <button id="clear-wishes" class="btn danger ghost">Alle Wünsche löschen</button>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
