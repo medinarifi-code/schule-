@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schülerverkauf – Abstimmung</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>🥨 Schülerverkauf</h1>
+    <p>Stimm ab, was es geben soll – und sag uns, was du dir für nächste Woche wünschst!</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Abstimmung</h2>
+      <p id="vote-status" class="muted">Lade…</p>
+      <div id="products" class="product-list"></div>
+    </section>
+
+    <section class="card">
+      <h2>💡 Wunsch für nächste Woche</h2>
+      <form id="wish-form">
+        <textarea id="wish-text" maxlength="200" rows="3"
+          placeholder="Was soll es nächste Woche geben?" required></textarea>
+        <div class="row">
+          <span id="wish-count" class="muted">0 / 200</span>
+          <button type="submit" class="btn">Wunsch senden</button>
+        </div>
+      </form>
+      <p id="wish-msg" class="msg" hidden></p>
+    </section>
+  </main>
+
+  <footer class="muted">Keine Anmeldung nötig · 1 Stimme pro Gerät</footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
