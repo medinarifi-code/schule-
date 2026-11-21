@@ -56,7 +56,23 @@
         </button>
       </form>
     </section>
+    <section class="card share appear" style="--delay: 160ms">
+      <button type="button" id="qr-btn" class="qr-btn" aria-label="QR-Code vergrößern">
+        <img src="img/qr.png" alt="QR-Code zur Abstimmungsseite" width="84" height="84" loading="lazy" />
+      </button>
+      <div>
+        <strong>Sag's weiter! 📲</strong>
+        <div class="muted">Freunde scannen den Code und stimmen auch ab. Tippe zum Vergrößern.</div>
+      </div>
+    </section>
   </main>
+
+  <dialog id="qr-dialog" class="dialog qr-dialog">
+    <form method="dialog">
+      <img src="img/qr.png" alt="QR-Code zur Abstimmungsseite" width="260" height="260" />
+      <button class="btn btn-block">Schließen</button>
+    </form>
+  </dialog>
 
   <footer>Keine Anmeldung nötig · 1 Stimme pro Gerät</footer>
 

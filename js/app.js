@@ -208,6 +208,12 @@ function confetti(origin) {
   }
 }
 
+// ---------- QR-Code vergrößern ----------
+document.getElementById("qr-btn").addEventListener("click", () => {
+  const dlg = document.getElementById("qr-dialog");
+  if (typeof dlg.showModal === "function") dlg.showModal();
+});
+
 // ---------- Wünsche ----------
 wishText.addEventListener("input", () => {
   const n = wishText.value.length;
