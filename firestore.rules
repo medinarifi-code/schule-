@@ -5,7 +5,7 @@ service cloud.firestore {
     // >>> HIER DIESELBE ADMIN-E-MAIL WIE IN js/firebase-config.js EINTRAGEN <<<
     function isAdmin() {
       return request.auth != null
-        && request.auth.token.email == 'admin@example.com';
+        && request.auth.token.email == 'medinarifi@icloud.com';
     }
 
     function currentRound() {
