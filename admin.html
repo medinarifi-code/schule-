@@ -2,56 +2,95 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#2c2a4a" />
   <title>Schülerverkauf – Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>" />
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin />
+  <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js" />
+  <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js" />
+  <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-  <header class="hero admin">
-    <h1>🔧 Admin – Schülerverkauf</h1>
-    <button id="logout" class="btn small ghost" hidden>Abmelden</button>
+<body class="admin">
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-emoji" aria-hidden="true">🔧</div>
+      <h1>Admin</h1>
+      <p>Schülerverkauf verwalten</p>
+    </div>
+    <button id="logout" class="btn btn-small btn-glass" hidden>Abmelden</button>
+    <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,40 C240,80 480,0 720,32 C960,64 1200,16 1440,40 L1440,80 L0,80 Z" />
+    </svg>
   </header>
 
   <main class="container">
+    <!-- Wird geladen -->
+    <section id="loading-section" class="card appear">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </section>
+
     <!-- Login -->
-    <section id="login-section" class="card" hidden>
-      <h2>Anmelden</h2>
-      <form id="login-form">
+    <section id="login-section" class="card appear" hidden>
+      <div class="card-head"><h2>🔐 Anmelden</h2></div>
+      <form id="login-form" class="stack">
         <input id="login-email" type="email" placeholder="E-Mail" autocomplete="username" required />
         <input id="login-password" type="password" placeholder="Passwort" autocomplete="current-password" required />
-        <button type="submit" class="btn">Anmelden</button>
+        <button type="submit" class="btn btn-block"><span>Anmelden</span></button>
       </form>
-      <p id="login-msg" class="msg error" hidden></p>
     </section>
 
     <div id="admin-section" hidden>
+      <!-- Übersicht -->
+      <div class="stats appear">
+        <div class="stat"><span class="stat-num" id="stat-votes">0</span><span class="stat-label">Stimmen</span></div>
+        <div class="stat"><span class="stat-num" id="stat-products">0</span><span class="stat-label">Produkte</span></div>
+        <div class="stat"><span class="stat-num" id="stat-wishes">0</span><span class="stat-label">Wünsche</span></div>
+      </div>
+
+      <!-- Ergebnisse -->
+      <section class="card appear" style="--delay: 40ms">
+        <div class="card-head">
+          <h2>📊 Ergebnis</h2>
+          <span id="round-label" class="badge"></span>
+        </div>
+        <div id="results" class="product-list voted"></div>
+        <button id="reset-votes" class="btn btn-danger btn-block"><span>🔄 Alle Stimmen auf 0 setzen</span></button>
+      </section>
+
       <!-- Produkte -->
-      <section class="card">
-        <h2>Produkte zur Abstimmung</h2>
-        <form id="product-form" class="row">
+      <section class="card appear" style="--delay: 80ms">
+        <div class="card-head"><h2>🛒 Produkte</h2></div>
+        <form id="product-form" class="inline-form">
           <input id="product-name" type="text" maxlength="60" placeholder="z. B. Pizza-Brötchen 🍕" required />
-          <button type="submit" class="btn">Hinzufügen</button>
+          <button type="submit" class="btn"><span>Hinzufügen</span></button>
         </form>
         <ul id="admin-products" class="admin-list"></ul>
       </section>
 
-      <!-- Ergebnisse -->
-      <section class="card">
-        <h2>Stimmen <span id="round-label" class="muted"></span></h2>
-        <p id="total-votes" class="muted"></p>
-        <div id="results" class="product-list"></div>
-        <button id="reset-votes" class="btn danger">🔄 Alle Stimmen auf 0 setzen</button>
-      </section>
-
       <!-- Wünsche -->
-      <section class="card">
-        <h2>💡 Wünsche der Schüler <span id="wish-total" class="muted"></span></h2>
+      <section class="card appear" style="--delay: 120ms">
+        <div class="card-head"><h2>💡 Wünsche</h2></div>
         <ul id="wishes" class="admin-list"></ul>
-        <button id="clear-wishes" class="btn danger ghost">Alle Wünsche löschen</button>
+        <button id="clear-wishes" class="btn btn-ghost-danger btn-block"><span>Alle Wünsche löschen</span></button>
       </section>
     </div>
   </main>
+
+  <dialog id="confirm-dialog" class="dialog">
+    <form method="dialog">
+      <p id="confirm-text"></p>
+      <div class="dialog-actions">
+        <button value="cancel" class="btn btn-soft">Abbrechen</button>
+        <button value="ok" class="btn btn-danger" id="confirm-ok">Ja, sicher</button>
+      </div>
+    </form>
+  </dialog>
 
   <script type="module" src="js/admin.js"></script>
 </body>
